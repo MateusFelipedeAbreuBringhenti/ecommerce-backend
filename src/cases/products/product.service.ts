@@ -19,11 +19,14 @@ export class ProductService {
         private readonly repository: Repository<Product>
     ) {}
 
-    findAll(category?: Category): Promise<Product[]> {
+    findAll(category?: Category | null): Promise<Product[]> {
         if (!category) {
             return this.repository.find();
         }else{
-            return this.repository.find({where: {category: category}});
+            return this.repository.find({
+                where: { category: category },
+                relations: ['category'],
+            });
         }
     }
 

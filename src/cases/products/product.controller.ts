@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Par
 import { Product } from "./product.entity";
 import { ProductService } from "./product.service";
 import { CategoryService } from "../categories/category.service";
+import { validate as isUUID } from 'uuid';
 
 @Controller('products')
 export class ProductController {
@@ -10,11 +11,12 @@ export class ProductController {
     (private readonly service: ProductService, private readonly categoryService: CategoryService) {}   
 
     @Get()
-    async findAll(@Query('categoryId', ParseUUIDPipe) categoryId: string): Promise<Product[]> {
-        
+    async find(@Query('categoryId') categoryId: string): Promise<Product[]> {
+        if (categoryId && isUUID(categoryId)) {
             const category = await this.categoryService.findById(categoryId);
-            return this.service.findAll(category ? category : undefined);
-        
+            return this.service.findAll(category);
+        }
+        return this.service.findAll();
     }
 
     @Get(':id')
