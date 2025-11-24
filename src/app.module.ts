@@ -6,6 +6,9 @@ import { ProductModule } from './cases/products/product.module';
 import { ConfigModule } from '@nestjs/config';
 import { CityModule } from './cases/cities/city.module';
 import { CustomerModule } from './cases/customers/customer.module';
+import { OrderModule } from './cases/orders/entities/order.module';
+import { SupabaseModule } from './lib/supabase.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -26,7 +29,12 @@ import { CustomerModule } from './cases/customers/customer.module';
     BrandModule,
     ProductModule,
     CityModule,
-    CustomerModule
+    CustomerModule,
+    OrderModule,
+
+
+    SupabaseModule,
+    AuthModule
   ],
 })
 export class AppModule {}

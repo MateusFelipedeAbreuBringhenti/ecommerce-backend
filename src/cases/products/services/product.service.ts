@@ -1,46 +1,36 @@
-import { Repository } from "typeorm";
-import { Product } from "../entities/product.entity";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Injectable } from "@nestjs/common";
-import { Category } from "../../categories/category.entity";
+import { Repository } from 'typeorm';
+import { Product } from '../entities/product.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable } from '@nestjs/common';
+import { Category } from '../../categories/category.entity';
 
 @Injectable()
 export class ProductService {
-    update(id: string, product: Product) {
-        throw new Error("Method not implemented.");
+  constructor(
+    @InjectRepository(Product)
+    private repository: Repository<Product>,
+  ) {}
+
+  findAll(category?: Category | null): Promise<Product[]> {
+    if (!category) {
+      return this.repository.find();
+    } else {
+      return this.repository.find({
+        where: { category: category },
+        relations: ['category'],
+      });
     }
+  }
 
-    delete(id: string) {
-        throw new Error("Method not implemented.");
-    }
+  findById(id: string): Promise<Product | null> {
+    return this.repository.findOneBy({ id: id });
+  }
 
-    constructor(
-        @InjectRepository(Product)
-        private readonly repository: Repository<Product>
-    ) {}
+  save(product: Product): Promise<Product> {
+    return this.repository.save(product);
+  }
 
-    findAll(category?: Category | null): Promise<Product[]> {
-        if (!category) {
-            return this.repository.find();
-        }else{
-            return this.repository.find({
-                where: { category: category },
-                relations: ['category'],
-            });
-        }
-    }
-
-    findById(id: string): Promise<Product | null> {
-        return this.repository.findOneBy({id: id});
-    }
-
-    save(product: Product): Promise<Product> {
-        return this.repository.save(product);
-    }
-
-    async remove(id: string):Promise<void> {
-
-        await this.repository.delete(id);
-    }
-} 
-
+  async remove(id: string): Promise<void> {
+    await this.repository.delete(id);
+  }
+}
