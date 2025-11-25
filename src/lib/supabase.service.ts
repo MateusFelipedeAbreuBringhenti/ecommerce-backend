@@ -7,11 +7,10 @@ export class SupabaseService {
 
   constructor() {
     this.supabase = createClient(
-      process.env.VITE_SUPABASE_URL!,
-      process.env.VITE_SUPABASE_ANON_KEY!
+      process.env.SUPABASE_URL!,
+      process.env.SUPABASE_KEY!
     );
   }
-
 
   async signUp(email: string, password: string) {
     const { data, error } = await this.supabase.auth.admin.createUser({
@@ -20,7 +19,7 @@ export class SupabaseService {
       email_confirm: true,
     });
 
-    if (error) throw new HttpException(error.message, 400);
+    if (error) throw error;
 
     return data.user;
   }
@@ -35,6 +34,7 @@ export class SupabaseService {
       if (error.message.includes("Invalid login credentials")) {
         throw new HttpException("Credencial Inválida", 401);
       }
+
       throw new HttpException(error.message, 400);
     }
 
