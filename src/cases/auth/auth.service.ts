@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { SupabaseService } from '../lib/supabase/supabase.service';
+import { CustomerService } from '../customers/customer.service';
 import { AuthDTO, UserDTO } from './auth.dto';
-import { SupabaseService } from 'src/lib/supabase.service';
-import { CustomerService } from 'src/cases/customers/customer.service';
 
 @Injectable()
 export class AuthService {

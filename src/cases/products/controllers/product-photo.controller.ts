@@ -1,8 +1,8 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { validate as isUUID } from 'uuid';
-import { ProductService } from '../services/product.service';
 import { ProductPhoto } from '../entities/product-photo.entity';
 import { ProductPhotoService } from '../services/product-photo.service';
+import { validate as isUUID } from 'uuid';
+import { ProductService } from '../services/product.service';
 
 @Controller('product-photos')
 export class ProductPhotoController {

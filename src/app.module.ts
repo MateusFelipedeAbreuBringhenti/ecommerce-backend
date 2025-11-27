@@ -7,14 +7,12 @@ import { ConfigModule } from '@nestjs/config';
 import { CityModule } from './cases/cities/city.module';
 import { CustomerModule } from './cases/customers/customer.module';
 import { OrderModule } from './cases/orders/entities/order.module';
-import { SupabaseModule } from './lib/supabase.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './cases/auth/auth.module';
+import { SupabaseModule } from './lib/supabase/supabase.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -32,9 +30,10 @@ import { AuthModule } from './auth/auth.module';
     CustomerModule,
     OrderModule,
 
-
+    //auth
+    
     SupabaseModule,
-    AuthModule
+    AuthModule,
   ],
 })
 export class AppModule {}

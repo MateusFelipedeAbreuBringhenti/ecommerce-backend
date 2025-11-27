@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
   HttpException,
   HttpStatus,
   Param,
@@ -63,7 +62,6 @@ export class ProductController {
   }
 
   @Delete(':id')
-  @HttpCode(204)
   async remove(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
     const found = await this.service.findById(id);
 
