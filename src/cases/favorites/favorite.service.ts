@@ -13,6 +13,9 @@ export class FavoriteService {
   delete(id: string) {
     throw new Error('Method not implemented.');
   }
+  post(id: string, favorite: Favorite) {
+    throw new Error('Method not implemented.');
+  }
 
   constructor(
     @InjectRepository(Favorite)
